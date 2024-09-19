@@ -127,7 +127,20 @@ data_df["YearsCodePro"] = data_df["YearsCodePro"].astype(float)
 data_df.info()
 
 
+########## Encoding the String Columns  #############
+from sklearn.preprocessing import LabelEncoder
 
+le_Country = LabelEncoder()
+le_EdLevel = LabelEncoder()
+
+data_df["Country"] = le_Country.fit_transform(data_df["Country"])
+data_df["Country"].unique()
+
+data_df["EdLevel"] = le_EdLevel.fit_transform(data_df["EdLevel"])
+data_df["EdLevel"].unique()
+
+# Check the Final data after All the Cleaning and Label encoding
+data_df.info()
 
 
 
