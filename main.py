@@ -146,20 +146,38 @@ data_df.info()
 X = data_df.drop("Salary", axis=1)
 y = data_df["Salary"]
 
+
+# Define Train Test Split:
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42)
+
 ########## Linear Regression ###############
 from sklearn.linear_model import LinearRegression
 linear_reg = LinearRegression()
-linear_reg.fit(X, y)
-y_pred = linear_reg.predict(X)
+linear_reg.fit(X_train, y_train)
+y_pred = linear_reg.predict(X_test)
 
 from sklearn.metrics import mean_squared_error
 import numpy as np
-error_mean_square = mean_squared_error(y, y_pred)
+error_mean_square = mean_squared_error(y_test, y_pred)
 error = np.sqrt(error_mean_square).item()
 print(f"Linear Regression Error: ${error:.2f}")
 
 
+########## DecisionTreeRegressor ###############
+from sklearn.tree import DecisionTreeRegressor
+decision_tree_regresser = DecisionTreeRegressor(random_state=0)
+decision_tree_regresser.fit(X_train, y_train)
+y_pred = decision_tree_regresser.predict(X_test)
 
+error_mean_square = mean_squared_error(y_test, y_pred)
+error = np.sqrt(error_mean_square).item()
+print(f"Decision Tree Regressor Error: ${error:.2f}")
+
+
+########## Random Forest Regressor ##################
+from sklearn import ran
 
 
 
