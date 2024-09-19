@@ -28,4 +28,8 @@ data_df.reset_index(inplace=True)
 data_df.rename(columns={"ConvertedComp":"Salary"}, inplace=True)
 data_df.head(10)
 
+# let's only focus on full-time employment 
+# and we can drop the employment column after
+data_df = data_df[data_df["Employment"]=="Employed full-time"]
+
 
