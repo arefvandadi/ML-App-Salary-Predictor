@@ -92,10 +92,8 @@ data_df["YearsCodePro"].unique()
 # Setting thee two to 0.5 and 50 respectively
 data_df.loc[(data_df["YearsCodePro"]=="Less than 1 year"), "YearsCodePro"] = 0.5
 data_df.loc[(data_df["YearsCodePro"]=="More than 50 years"), "YearsCodePro"] = 50
+data_df["YearsCodePro"] = data_df["YearsCodePro"].astype(float)
 data_df["YearsCodePro"].unique()
-
-data_df[data_df["YearsCodePro"]==50]
-
 
 
 ######## Clean up the EdLevel column  ###########
@@ -123,6 +121,11 @@ data_df["EdLevel"].unique()
 # Cleaning is almost done.
 # Let's check how the data look like
 data_df.head()
+data_df.info()
+
+data_df["YearsCodePro"] = data_df["YearsCodePro"].astype(float)
+data_df.info()
+
 
 
 
