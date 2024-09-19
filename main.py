@@ -55,3 +55,25 @@ data_df = filter_countries_per_occurence(data_df, 400)
 
 #Check if countries with low datapoints were removed
 data_df["Country"].value_counts()
+
+
+# BoxPlot of Salaries per Countries
+fig, ax = plt.subplots(1, 1, figsize=(12, 7))
+data_df.boxplot("Salary", "Country", ax = ax)
+plt.title("Salary ($US) vs Country")
+plt.suptitle("")
+plt.ylabel("Salary")
+plt.xticks(rotation=90)
+plt.show()
+
+# Removing Outliers
+# Looking at the plot, Most of the data sit between 0 to 250k.
+# Let's remove the outliers: >250k and <10k
+data_df = data_df[(data_df["Salary"]<250000) & (data_df["Salary"]>10000)]
+
+#Check min and max to souble check if outliers were removed
+data_df["Salary"].min()
+data_df["Salary"].max()
+
+
+
