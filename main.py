@@ -142,6 +142,25 @@ data_df["EdLevel"].unique()
 # Check the Final data after All the Cleaning and Label encoding
 data_df.info()
 
+# Define X and Y Training Data from the Original Data
+X = data_df.drop("Salary", axis=1)
+y = data_df["Salary"]
+
+########## Linear Regression ###############
+from sklearn.linear_model import LinearRegression
+linear_reg = LinearRegression()
+linear_reg.fit(X, y)
+y_pred = linear_reg.predict(X)
+
+from sklearn.metrics import mean_squared_error
+import numpy as np
+error_mean_square = mean_squared_error(y, y_pred)
+error = np.sqrt(error_mean_square).item()
+print(f"Linear Regression Error: ${error:.2f}")
+
+
+
+
 
 
 
