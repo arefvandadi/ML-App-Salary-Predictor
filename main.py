@@ -75,5 +75,22 @@ data_df = data_df[(data_df["Salary"]<250000) & (data_df["Salary"]>10000)]
 data_df["Salary"].min()
 data_df["Salary"].max()
 
+# BoxPlot of Salaries per Countries After Ouliers removed
+fig, ax = plt.subplots(1, 1, figsize=(12, 7))
+data_df.boxplot("Salary", "Country", ax = ax)
+plt.title("Salary ($US) vs Country")
+plt.suptitle("")
+plt.ylabel("Salary")
+plt.xticks(rotation=90)
+plt.show()
 
+######## Clean up the YearsCodePro column  ###########
+# check the unique values
+data_df["YearsCodePro"].unique()
+
+# There are "Less than 1 Year" and "More than 50 years" values
+# Setting thee two to 0.5 and 50 respectively
+data_df[data_df["YearsCodePro"]=="Less than 1 year"] = 0.5
+data_df[data_df["YearsCodePro"]=="More than 50 years"] = 50
+data_df["YearsCodePro"].unique()
 
