@@ -90,7 +90,43 @@ data_df["YearsCodePro"].unique()
 
 # There are "Less than 1 Year" and "More than 50 years" values
 # Setting thee two to 0.5 and 50 respectively
-data_df[data_df["YearsCodePro"]=="Less than 1 year"] = 0.5
-data_df[data_df["YearsCodePro"]=="More than 50 years"] = 50
+data_df.loc[(data_df["YearsCodePro"]=="Less than 1 year"), "YearsCodePro"] = 0.5
+data_df.loc[(data_df["YearsCodePro"]=="More than 50 years"), "YearsCodePro"] = 50
 data_df["YearsCodePro"].unique()
+
+data_df[data_df["YearsCodePro"]==50]
+
+
+
+######## Clean up the EdLevel column  ###########
+# check the unique values
+data_df["EdLevel"].unique()
+data_df["EdLevel"].value_counts()
+
+
+# Let's use a function and Apply function to clean up this column
+def clean_education_level(x: str) -> str:
+    """
+    Helper function to clean up the EdLevel column
+    """
+    if "Master" in x:
+        return "Master's degree"
+    if "Bachelor" in x:
+        return "Bachelor's degree"
+    if "doctoral degree" in x or "Professional degree" in x:
+        return "Post grad"
+    return "Less than a Bachelors"
+
+data_df["EdLevel"] = data_df["EdLevel"].apply(clean_education_level) 
+data_df["EdLevel"].unique()
+
+# Cleaning is almost done.
+# Let's check how the data look like
+data_df.head()
+
+
+
+
+
+
 
