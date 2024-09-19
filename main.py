@@ -194,18 +194,40 @@ from sklearn.model_selection import GridSearchCV
 max_depth = [None, 2,4,6,8,10,12]
 parameters = {"max_depth": max_depth}
 
-regressor = RandomForestRegressor(random_state=0)
-gs = GridSearchCV(regressor, parameters, scoring='neg_mean_squared_error')
-gs.fit(X_train, y_train)
+RF_regressor = RandomForestRegressor(random_state=0)
+RF_gs = GridSearchCV(RF_regressor, parameters, scoring='neg_mean_squared_error')
+RF_gs.fit(X_train, y_train)
 
-regressor_best = gs.best_estimator_
+RF_regressor_best = RF_gs.best_estimator_
 
-regressor_best.fit(X_train, y_train)
-y_pred = regressor_best.predict(X_test)
+RF_regressor_best.fit(X_train, y_train)
+y_pred = RF_regressor_best.predict(X_test)
 error = np.sqrt(mean_squared_error(y_test, y_pred))
 print("${:,.02f}".format(error))
 # Random Forest Regressor Error: $33256.00
 # Best Random Forest Regressor Error (Max Depth:8): $29,730.58
+
+
+############### Grid Search Decision Tree Regressor Grid Search ############
+max_depth = [None, 2,4,6,8,10,12]
+parameters = {"max_depth": max_depth}
+
+DecTree_regressor = DecisionTreeRegressor(random_state=0)
+DT_gs = GridSearchCV(DecTree_regressor, parameters, scoring='neg_mean_squared_error')
+DT_gs.fit(X_train, y_train)
+
+DecTree_regressor_best = DT_gs.best_estimator_
+
+DecTree_regressor_best.fit(X_train, y_train)
+y_pred = DecTree_regressor_best.predict(X_test)
+error = np.sqrt(mean_squared_error(y_test, y_pred))
+print(f"Best Decision Tree Regressor Error: ${error:,.02f}")
+# Decision Tree Regressor Error: $41927.26
+# Best Decision Tree Regressor Error (Max Depth:86): $30,169.21
+
+
+
+
 
 
 
