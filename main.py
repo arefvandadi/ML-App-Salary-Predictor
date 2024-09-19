@@ -177,8 +177,35 @@ print(f"Decision Tree Regressor Error: ${error:.2f}")
 
 
 ########## Random Forest Regressor ##################
-from sklearn import ran
+from sklearn.ensemble import RandomForestRegressor
+random_forest_reg = RandomForestRegressor(random_state=0)
+random_forest_reg.fit(X_train, y_train)
+y_pred = random_forest_reg.predict(X_test)
 
+error_mean_square = mean_squared_error(y_test, y_pred)
+error = np.sqrt(error_mean_square).item()
+print(f"Random Forest Regressor Error: ${error:.2f}")
+
+
+
+############### Grid Search Random Forst Regressor Grid Search ############
+from sklearn.model_selection import GridSearchCV
+
+max_depth = [None, 2,4,6,8,10,12]
+parameters = {"max_depth": max_depth}
+
+regressor = RandomForestRegressor(random_state=0)
+gs = GridSearchCV(regressor, parameters, scoring='neg_mean_squared_error')
+gs.fit(X_train, y_train)
+
+regressor_best = gs.best_estimator_
+
+regressor_best.fit(X_train, y_train)
+y_pred = regressor_best.predict(X_test)
+error = np.sqrt(mean_squared_error(y_test, y_pred))
+print("${:,.02f}".format(error))
+# Random Forest Regressor Error: $33256.00
+# Best Random Forest Regressor Error (Max Depth:8): $29,730.58
 
 
 
