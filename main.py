@@ -22,7 +22,7 @@ data_df.dropna(inplace=True)
 data_df.isna().sum()
 
 # reset the index
-data_df.reset_index(inplace=True)
+data_df.reset_index(inplace=True, drop=True)
 
 # Change th column name from ConvertedComp to Salary
 data_df.rename(columns={"ConvertedComp":"Salary"}, inplace=True)
@@ -203,7 +203,7 @@ RF_regressor_best = RF_gs.best_estimator_
 RF_regressor_best.fit(X_train, y_train)
 y_pred = RF_regressor_best.predict(X_test)
 error = np.sqrt(mean_squared_error(y_test, y_pred))
-print("${:,.02f}".format(error))
+print(f"Best Random Forest Regressor Error: ${error:,.02f}")
 # Random Forest Regressor Error: $33256.00
 # Best Random Forest Regressor Error (Max Depth:8): $29,730.58
 
@@ -226,7 +226,18 @@ print(f"Best Decision Tree Regressor Error: ${error:,.02f}")
 # Best Decision Tree Regressor Error (Max Depth:86): $30,169.21
 
 
+########## Let's Save the Best Model into "model"  ##########
+model = RF_regressor_best
 
+########## Let's test the Best Model with a Random Data  ##########
+x_data = np.array([["United States", "Master's degree", 25]])
+
+# Convert the data with label encoders and then to float
+x_data[:, 0] = le_Country.fit_transform(x_data[:, 0])
+x_data[:, 1] = le_EdLevel.fit_transform(x_data[:, 1])
+x_data = x_data.astype(float)
+y_data_pred = model.predict(x_data)
+print(f"Testing the Best Model with random data --> y_pred = {y_data_pred}")
 
 
 
