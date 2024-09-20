@@ -240,6 +240,23 @@ y_data_pred = model.predict(x_data)
 print(f"Testing the Best Model with random data --> y_pred = {y_data_pred}")
 
 
+############## Saving the Model as a pickle file ###############
+import pickle
+
+model_data = {"model": model, "le_Country": le_Country, "le_EdLevel": le_EdLevel}
+with open('Full_ML_Model.pkl', 'wb') as file:
+    pickle.dump(model_data, file)
+
+############## Test the pickled Model  ############
+with open('Full_ML_Model.pkl', 'rb') as file:
+    model_data = pickle.load(file)
+
+model_loaded = model_data["model"]
+le_Country = model_data["le_Country"]
+le_EdLevel = model_data["le_EdLevel"]
+
+y_pred = model_loaded.predict(x_data)
+print(f"Testing the Best Model with random data --> y_pred = {y_pred}")
 
 
 
