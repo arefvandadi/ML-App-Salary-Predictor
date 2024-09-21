@@ -1,0 +1,7 @@
+README.md
+.venv
+__pycache__
+Dockerfile
+./data/notebooks
+TODO.md
+.gitignore
