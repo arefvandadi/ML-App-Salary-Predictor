@@ -4,8 +4,8 @@ WORKDIR /app
 
 COPY ./data/stack-overflow-developer-survey-2020 ./data/stack-overflow-developer-survey-2020
 COPY ./app.py .
-COPY ./explore.py .
-COPY ./predict.py .
+COPY ./explore_page.py .
+COPY ./predict_page.py .
 COPY ./Full_ML_Model.pkl .
 
 COPY ./requirements.txt ./requirements.txt
