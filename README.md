@@ -1,6 +1,27 @@
-# Stack Overflow Annual Developer Survey
-This is the [Link](https://survey.stackoverflow.co/) to all the surveys.
+# Live Demo
+### Please Check out the Live Demo of the web app: <u>**[Live Demo](https://ml-app-salary-predictor-790035278398.us-east5.run.app)**</u>
 
-# Full_ML_Model.pkl
-It is a disctionary that contains the trained model, and the two label encoders for the country and education level as shown below:
-{"model": model, "le_Country": le_Country, "le_EdLevel": le_EdLevel}
+<br />
+<br />
+
+# Overview
+A web app to predict the web developer's salary based on the public data from Stack Overflow surveys. It predicts the salary based on country, education level and experience.
+
+<br />
+
+# Technologies Used
+- **Frontend and Backend**: Streamlit
+- **Programming Language**: Python
+- **Cloud Hosting**: Google Cloud Platform (GCP)
+
+<br />
+
+# Stack Overflow Annual Developer Survey
+Use this [Link](https://survey.stackoverflow.co/) to access the surveys.
+
+<br />
+<br />
+
+# Acknowledgments
+
+This project was inspired by a video from [Patrick Loeber's Youtube Channel](https://www.youtube.com/@patloeber).
