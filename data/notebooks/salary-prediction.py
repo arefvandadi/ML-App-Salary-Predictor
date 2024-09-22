@@ -1,7 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-data_df = pd.read_csv("./data/stack-overflow-developer-survey-2020/survey_results_public.csv")
+data_df = pd.read_csv("../stack-overflow-developer-survey-2020/survey_results_public.csv")
 
 data_df.head(10)
 
@@ -151,6 +151,44 @@ y = data_df["Salary"]
 from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42)
+
+########## Neural Network ###############
+import torch
+import torch.nn as nn 
+
+X_train_t = torch.from_numpy(X_train.values).float()
+X_test_t = torch.from_numpy(X_test.values).float()
+y_train_t = torch.from_numpy(y_train.values).float()
+# y_test_t = torch.from_numpy(y_test.values).float()
+
+model = nn.Sequential(
+    nn.Linear(3, 20),
+    nn.ReLU(),
+    # nn.Sigmoid(),
+    # nn.Tanh(),
+    # nn.LeakyReLU(),
+    # nn.Linear(20, 20),
+    # nn.ReLU(),
+    # nn.Sigmoid(),
+    nn.Linear(20, 1),
+)
+
+criterion = nn.MSELoss()
+optimizer = torch.optim.Adam(model.parameters(), lr=5)
+
+for epoch in range(30):
+    y_pred_nn = model(X_train_t)
+
+    Loss = criterion(y_pred_nn, y_train_t)
+    print(torch.sqrt(Loss))
+    
+    optimizer.zero_grad()
+
+    Loss.backward()
+
+    optimizer.step()
+# print(torch.sqrt(Loss))
+
 
 ########## Linear Regression ###############
 from sklearn.linear_model import LinearRegression
