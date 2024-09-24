@@ -1,5 +1,5 @@
 # Live Demo
-### Please Check out the Live Demo of the web app: <u>**[Live Demo](https://ml-app-salary-predictor-790035278398.us-east5.run.app)**</u>
+### Please Check out the Live Demo of the web app: <u>**[Live Demo](https://ml-app-salary-predictor-sa-790035278398.us-east5.run.app)**</u>
 
 <br />
 <br />
