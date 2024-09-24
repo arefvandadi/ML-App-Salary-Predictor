@@ -1,17 +1,14 @@
 name: Deploy to Cloud Run
 
 env:
-  SERVICE_NAME: github-action-sa
+  SERVICE_NAME: ml-app-salary-predictor-sa
   PROJECT_ID: ml-app-salary-predictor
   DOCKER_IMAGE_URL: us-east5-docker.pkg.dev/ml-app-salary-predictor/ml-app-salary-predictor-repo/ml-app-salary-predictor
 
 on:
   push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+    tags:
+      - 'v*'
 
 jobs:
   dockerize-and-deploy:
@@ -24,22 +21,22 @@ jobs:
       - name: Google Cloud Auth
         uses: 'google-github-actions/auth@v2'
         with:
-          credentials_json: '${{ secrets.GCP_GA_SA_KEY }}'
+          credentials_json: '${{ secrets.GCP_MLSPSA_SA_KEY }}'
           project_id: ${{ env.PROJECT_ID }}
 
       - name: Set up Cloud SDK
         uses: 'google-github-actions/setup-gcloud@v2'
         with:
           project_id: ${{ env.PROJECT_ID }}
-          service_account_key: '${{ secrets.GCP_GA_SA_KEY }}'
+          service_account_key: '${{ secrets.GCP_MLSPSA_SA_KEY }}'
 
-      # - name: Configure Docker
-      #   run: |
-      #     gcloud auth configure-docker us-east5-docker.pkg.dev
-
-      - name: Authenticate Docker with gcloud
+      - name: Configure Docker
         run: |
-          gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://us-east5-docker.pkg.dev
+          gcloud auth configure-docker us-east5-docker.pkg.dev
+
+      # - name: Authenticate Docker with gcloud
+      #   run: |
+      #     gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://us-east5-docker.pkg.dev
 
 
       - name: Build and Push Docker Image
