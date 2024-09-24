@@ -41,13 +41,13 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          docker build -t ${{ env.DOCKER_IMAGE_URL }}:${{ github.sha }} -f Dockerfile .
-          docker push ${{ env.DOCKER_IMAGE_URL }}:${{ github.sha }}
+          docker build -t ${{ env.DOCKER_IMAGE_URL }}:${{ github.ref_name }} -f Dockerfile .
+          docker push ${{ env.DOCKER_IMAGE_URL }}:${{ github.ref_name }}
 
       - name: Deploy to Cloud Run
         run: |
           gcloud run deploy ${{ env.SERVICE_NAME }} \
-            --image ${{ env.DOCKER_IMAGE_URL }}:${{ github.sha }} \
+            --image ${{ env.DOCKER_IMAGE_URL }}:${{ github.ref_name }} \
             --platform managed \
             --region us-east5 \
             --allow-unauthenticated
