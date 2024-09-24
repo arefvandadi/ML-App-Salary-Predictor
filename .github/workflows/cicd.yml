@@ -1,0 +1,51 @@
+name: Deploy to Cloud Run
+
+env:
+  SERVICE_NAME: ml-app-salary-predictor
+  PROJECT_ID: ml-app-salary-predictor
+  DOCKER_IMAGE_URL: us-east5-docker.pkg.dev/ml-app-salary-predictor/ml-app-salary-predictor-repo/ml-app-salary-predictor
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  dockerize-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Google Cloud Auth
+        uses: 'google-github-actions/auth@v2'
+        with:
+          credentials_json: '${{ secrets.GCP_SA_KEY }}'
+          project_id: ${{ env.PROJECT_ID }}
+
+      - name: Set up Cloud SDK
+        uses: 'google-github-actions/setup-gcloud@v2'
+        with:
+          project_id: ${{ env.PROJECT_ID }}
+          service_account_key: '${{ secrets.GCP_SA_KEY }}'
+
+      - name: Configure Docker
+        run: |
+          gcloud auth configure-docker us-east5-docker.pkg.dev
+
+      - name: Build and Push Docker Image
+        run: |
+          docker build -t ${{ env.DOCKER_IMAGE_URL }}:${{ github.sha }} -f Dockerfile .
+          docker push ${{ env.DOCKER_IMAGE_URL }}:${{ github.sha }}
+
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy ${{ env.SERVICE_NAME }} \
+            --image ${{ env.DOCKER_IMAGE_URL }}:${{ github.sha }} \
+            --platform managed \
+            --region us-east5 \
+            --allow-unauthenticated
