@@ -4,10 +4,8 @@ WORKDIR /app
 
 COPY ./data/stack-overflow-developer-survey-2020 ./data/stack-overflow-developer-survey-2020
 COPY ./app.py .
-COPY ./explore_page.py .
-COPY ./predict_page.py .
-COPY ./Full_ML_Model.pkl .
-
+COPY ./page_options ./page_options
+COPY ./data/trained-ML-model/Full_ML_Model.pkl ./data/trained-ML-model/Full_ML_Model.pkl
 COPY ./requirements.txt ./requirements.txt
 
 RUN pip install --no-cache-dir -r requirements.txt
